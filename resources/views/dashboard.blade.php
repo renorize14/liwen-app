@@ -197,7 +197,7 @@
                 textToFill = textToFill + "<button onclick='setClientData(\"" + json[i].client_name + "\",\"" + json[i].client_mail + "\",\"" + json[i].client_phone + "\",\"" + json[i].client_rut + "\")' type='button' class='btn btn-info' data-container='body' data-bs-toggle='modal' data-bs-target='#modal-default'>";
                 textToFill = textToFill + fechaHoraOriginal + ":00 - " + sigHora + ":00";
 
-                textToFill = textToFill + "</button>";
+                textToFill = textToFill + "</button><br>";
             }
 
             $("#nextHours").html(textToFill);
@@ -519,7 +519,8 @@
                                 date            : date,
                                 time            : time,
                                 speciality      : 'No informada',
-                                professional_id : @json($user_id)
+                                professional_id : @json($user_id),
+                                validated       : 1
                             }
                         })
                         .done( function ( response ){

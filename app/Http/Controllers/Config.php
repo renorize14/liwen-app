@@ -3,7 +3,7 @@
 /**
  * Clase para configurar el cliente de Flow
  */
-class FlowConfig
+class Config
 {
     /**
      * Configuración del cliente de Flow
@@ -11,8 +11,8 @@ class FlowConfig
     protected $config = [
         "APIKEY" => "2CFEE8DA-BADC-4E26-B73C-5CE4CL529F22",
         "SECRETKEY" => "d2a93b353471cb44a21e9ebb6341fb562385e759",
-        "APIURL" => "https://www.sandbox.flow.cl/api",
-        "BASEURL" => "127.0.0.1:8000"
+        "APIURL" => "https://sandbox.flow.cl/api",
+        "BASEURL" => "htt://127.0.0.1:8000"
     ];
 
     /**

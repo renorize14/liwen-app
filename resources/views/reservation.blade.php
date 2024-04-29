@@ -496,28 +496,30 @@
                                 date            : date,
                                 time            : time,
                                 speciality      : 'No informada',
-                                professional_id : prof_id
+                                professional_id : prof_id,
+                                validated       : 0
+
                             }
                         })
                         .done( function ( response ){
-                            console.log(response)
-                            if ( response != 0){
+                            if ( response.id != 0){
                                 getBlocksByProfessionalId(prof_id,0);
+                                let jsn = JSON.parse(response);
 
                                 $.ajax({
                                     url    : 'make-payment',
-                                    method : 'post',
+                                    method : 'get',
                                     type   : 'json',
-                                    async  : false,
                                     data   : {
-                                        _token : "{{ csrf_token() }}",
                                         email  : email,
                                         rut    : rut,
-                                        db_id  : response,
+                                        db_id  : jsn.id,
+                                        com_or : jsn.commerce_order
                                     }
                                 })
-                                .done( function ( response ){
-                                    console.log(response)
+                                .done( function ( resp ){
+                                    console.log(resp)
+                                    window.location.href = resp;
                                 })
                                 .fail( function ( error ){
                                     console.log(error)
@@ -526,7 +528,7 @@
                                 $("#buttonSuccess").click();*/
                             }
                             else{
-                                console.log(response)
+                                console.log(resp)
                             }
 
                         })

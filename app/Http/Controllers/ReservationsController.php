@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\NewMail;
+use App\Models\Professional;
 use App\Models\Reservation;
 use DateTime;
 use DateTimeZone;
@@ -43,13 +44,17 @@ class ReservationsController extends Controller
             $reservation->client_phone     = $request->phone;
             $reservation->client_rut       = $request->rut;
             $reservation->speciality       = $request->speciality;
-            $reservation->pagado           = 0;
+            $reservation->pagado           = $request->validated;
+            $reservation->commerce_order   = rand(1100, 2000);
 
 
 
             if ( $reservation->save() ) {
-                //Mail::to($request->email)->send(new NewMail());
-                echo $reservation->id;
+                $json = [
+                    "id" => $reservation->id,
+                    "commerce_order" => $reservation->commerce_order
+                ];
+                echo json_encode($json);
             }
             else{
                 echo "error";
@@ -100,6 +105,32 @@ class ReservationsController extends Controller
         if ( $reservations[0]->delete()){
             return "success";
         }
+    }
+
+    public function confirmPaymentPage(Request $request){
+
+        if ( Reservation::where("commerce_order", $request->commerce_order)->update(['pagado' => 1]) ){
+            $res    = Reservation::where('commerce_order', $request->commerce_order)->get();
+            $reserv = $res[0];
+
+            $profess = Professional::where('id', $reserv->professional_id)->get();
+
+            if ( count($profess) > 0 ){
+                $prof    = $profess[0];
+                return view('/confirm-payment', compact('reserv','prof'));
+            }
+            else{
+                $profess = Professional::where('id', 4)->get();
+                $prof    = $profess[0];
+                return view('/confirm-payment', compact('reserv','prof'));
+            }
+
+
+        }
+        else{
+            return view('/');
+        }
+
     }
 
 }

@@ -25,6 +25,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'home'])->name('welcome');
 
+Route::post('/', [HomeController::class, 'postRedirect'])->name('post-redirect');
+
 Route::get('dashboard', function () {
 	return view('dashboard');
 })->name('dashboard');
@@ -100,7 +102,7 @@ Route::post('/make-reservation', [ReservationsController::class, 'makeNewReserva
 
 Route::get('/verify-pay', [ReservationsController::class, 'verifyReservationPay'])->name('verify-pay');
 
-Route::post('/make-payment', [PaymentController::class, 'makePaymentOrder'])->name('make-payment');
+Route::get('/make-payment', [PaymentController::class, 'makePaymentOrder'])->name('make-payment');
 
 Route::post('/register-user', [RegisterController::class, 'registerUser'])->name('register-user');
 
@@ -111,4 +113,7 @@ Route::get('/get-user-data', [SessionsController::class, 'getUserData'])->name('
 Route::get('/get-next-blocks-by-id', [ReservationsController::class, 'getNextBlocks'])->name('get-next-blocks-by-id');
 
 Route::post('/cancel-reservation', [ReservationsController::class, 'cancelReservation'])->name('cancel-reservation');
+
+Route::post('/confirm-payment', [ReservationsController::class, 'confirmPaymentPage'])->name('confirm-payment');
+
 
